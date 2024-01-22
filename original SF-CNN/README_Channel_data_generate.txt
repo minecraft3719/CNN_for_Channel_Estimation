@@ -70,7 +70,7 @@ Tính các thành phần thông số trong hàm chuyền
     save_P=cdl.AveragePathGains;
 
 ######Tính góc tới AoA
-lgASAmean=-0.08*log10(1+ fc) + 1.81;   %UMi - Street Canyon  NLOS
+lgASAmean=-0.08*log10(1+ fc) + 1.81;   %UMi - Street Canyon  NLOS - Angle spread of Arrival
 lgASAstanvar=0.05*log10(1+ fc) + 0.3;
 ASA=10^(normrnd(lgASAmean,lgASAstanvar));  % ASA tính ngẫu nhiên theo ASA
 Cphi=0.779; % N=4
@@ -79,7 +79,7 @@ cdl.AnglesAoA=(2*randi([0,1],1,L)-1).*Phi+normrnd(0,ASA/7,1,L)+philosAoA;  % AoA
 save_AoA=cdl.AnglesAoA;
 
 ######Tính góc đi AoD - Cách gen ra giưx liệu giống với AoA nhưng sẽ dùng biến độc lập
-lgASDmean=-0.23*log10(1+ fc) + 1.53;   %UMi - Street Canyon  NLOS
+lgASDmean=-0.23*log10(1+ fc) + 1.53;   %UMi - Street Canyon  NLOS - Angle spread of Departure
 lgASDstanvar=0.11*log10(1+ fc) + 0.33;
 ASD=10^(normrnd(lgASDmean,lgASDstanvar));  % ASD
 Cphi=0.779; % N=4
