@@ -55,7 +55,7 @@ Thông số nrCDLChannel
 
 Tính các thành phần thông số trong hàm chuyền
 ######Tính Path delay
-    gDSmean=-0.24*log10(1+ fc) - 6.83;   %UMi - Street Canyon  NLOS
+    gDSmean=-0.24*log10(1+ fc) - 6.83;   %UMi - Street Canyon  NLOS - Delay spread
     lgDSstanvar=0.16*log10(1+ fc) + 0.28;
     DS=10^(normrnd(lgDSmean,lgDSstanvar));
     r_tau=2.1;
