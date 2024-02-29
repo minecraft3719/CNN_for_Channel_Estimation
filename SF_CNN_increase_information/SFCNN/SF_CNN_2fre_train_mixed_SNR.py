@@ -100,7 +100,11 @@ data_num_train=1000
 data_num_file=1000
 H_train=zeros((data_num_train,Nr,Nt,2*fre), dtype=float)
 H_train_noisy=zeros((data_num_train,Nr_beam,Nt_beam,2*fre), dtype=float)
-filedir = os.listdir('./2fre_data')  # type the path of training data
+
+file_path = os.path.abspath(os.path.dirname(__file__))
+
+
+filedir = os.listdir(file_path + '/2fre_data')  # type the path of training data
 n=0
 SNRr=0
 SNR_factor=5.9  # compensate channel power gain to approximate to 1
@@ -111,7 +115,7 @@ H_train_total_noisy = []
 
 for SNR in snr_train:
     for filename in filedir:
-        newname = os.path.join('./2fre_data', filename)
+        newname = os.path.join(file_path + '/2fre_data', filename)
         data = sio.loadmat(newname)
         channel = data['ChannelData_fre']
         for i in range(data_num_file):
@@ -162,7 +166,9 @@ print(H_train_total_1.shape,H_train_total_noisy_1.shape)
 
 # checkpoint
 
-filepath='CNN_UMi_3path_2fre_SNRminus_10dB_200ep.hdf5'
+filepath=file_path + '\CNN_UMi_3path_2fre_SNRminus_10dB_200ep.hdf5'
+
+
 
 checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
