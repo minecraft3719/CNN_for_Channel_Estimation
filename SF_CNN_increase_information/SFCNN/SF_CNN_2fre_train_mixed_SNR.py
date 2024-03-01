@@ -102,8 +102,6 @@ H_train=zeros((data_num_train,Nr,Nt,2*fre), dtype=float)
 H_train_noisy=zeros((data_num_train,Nr_beam,Nt_beam,2*fre), dtype=float)
 
 file_path = os.path.abspath(os.path.dirname(__file__))
-
-
 filedir = os.listdir(file_path + '/2fre_data')  # type the path of training data
 n=0
 SNRr=0
@@ -135,11 +133,9 @@ for SNR in snr_train:
                 H_train_Noise_im = H_im_tmp + Noise_im
                 H_train_Noise_im = np.reshape(H_train_Noise_im,[Nr,Nt])
 
-    
                 H_train[n*data_num_file+i,:,:,2*j]=H_re/scale
                 H_train[n*data_num_file+i, :, :, 2*j+1] = H_im/scale
                 
-
                 Y_re = H_train_Noise_re
                 Y_im = H_train_Noise_im
                 H_train_noisy[n*data_num_file+i, :, :, 2 * j] = Y_re / scale

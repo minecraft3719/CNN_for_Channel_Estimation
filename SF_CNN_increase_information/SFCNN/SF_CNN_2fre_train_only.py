@@ -33,25 +33,6 @@ for count in range (1,limcount):
         D = np.power( omega, m * n )
         return D
 
-    # def AWGN(IFsig, SNR):
-    #     dP = np.zeros(len(IFsig))
-    #     P = 0
-
-    #     for i in range(len(IFsig)):
-    #         dP[i] = abs(IFsig[i])**2
-    #         P = P + dP[i]
-
-    #     P = P/len(IFsig)
-    #     gamma = 10**(SNR/10)
-    #     N0 = P/gamma
-    #     n = ((N0/2)**(0.5))*np.random.standard_normal(len(IFsig))
-    #     IF_n = np.zeros((len(IFsig),1))
-
-    #     for i in range(len(IFsig)):
-    #         IF_n[i,:] = IFsig[i] + n[i]
-
-    #     return(IF_n)
-
     F_DFT=DFT_matrix(Nt)/np.sqrt(Nt)
     F_RF=F_DFT[:,0:Nt_beam]
     F=F_RF
