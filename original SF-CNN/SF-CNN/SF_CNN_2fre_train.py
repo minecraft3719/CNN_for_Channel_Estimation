@@ -13,11 +13,14 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth=True   #allow growth
 import scipy.io as sio
 
+file_path = os.path.abspath(os.path.dirname(__file__))
+os.chdir(file_path)
+
 Nt=32
 Nt_beam=32
 Nr=16
 Nr_beam=16
-SNR=10.0**(-10/10.0) # transmit power
+SNR=10.0**(20/10.0) # transmit power
 # DFT matrix
 def DFT_matrix(N):
     m, n = np.meshgrid(np.arange(N), np.arange(N))
