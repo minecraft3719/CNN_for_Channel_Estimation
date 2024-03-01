@@ -48,12 +48,13 @@ data_num_test=1000
 data_num_file=1000
 H_test=zeros((data_num_test,Nr,Nt,2*fre), dtype=float)
 H_test_noisy=zeros((data_num_test,Nr_beam,Nt_beam,2*fre), dtype=float)
-filedir = os.listdir('./2fre_data')  # type the path of testing data (different channel statistics from training data, used for performance evaluation)
+file_path = os.path.abspath(os.path.dirname(__file__))
+filedir = os.listdir(file_path + '/2fre_data')  # type the path of testing data (different channel statistics from training data, used for performance evaluation)
 n=0
 SNRr=0
 SNR_factor=5.9
 for filename in filedir:
-    newname = os.path.join('./2fre_data', filename)
+    newname = os.path.join(file_path + '/2fre_data', filename)
     data = sio.loadmat(newname)
     channel = data['ChannelData_fre']
     for i in range(data_num_file):
@@ -86,7 +87,8 @@ print(((H_test)**2).mean())
 
 
 # load model
-CNN = load_model('CNN_UMi_3path_2fre_SNRminus10dB_200ep.hdf5')
+modelloaded = file_path + '\CNN_UMi_3path_2fre_SNRminus_10dB_200ep.hdf5'
+CNN = load_model(modelloaded)
 
 t1=time.time()
 decoded_channel = CNN.predict(H_test_noisy)
