@@ -47,7 +47,8 @@ data_num_test=1000
 data_num_file=1000
 SNR_factor=5.9
 file_path = os.path.abspath(os.path.dirname(__file__))
-filedir = os.listdir(file_path + '/2fre_data')  # type the path of testing data (different channel statistics from training data, used for performance evaluation)
+os.chdir(file_path)
+filedir = os.listdir('./2fre_data')  # type the path of testing data (different channel statistics from training data, used for performance evaluation)
 count = 0
 
 Transmit_power = [-10, -5, 0, 5, 10, 15, 20 ] #SNR derivative
@@ -62,7 +63,7 @@ for Txpower in Transmit_power:
     SNRr=0
 
     for filename in filedir:
-        newname = os.path.join(file_path + '/2fre_data', filename)
+        newname = os.path.join('./2fre_data', filename)
         data = sio.loadmat(newname)
         channel = data['ChannelData_fre']
         for i in range(data_num_file):
@@ -95,7 +96,7 @@ for Txpower in Transmit_power:
 
 
     # load model
-    CNN = load_model(file_path + '\CNN_UMi_3path_2fre_SNRminus_10dB_200ep.hdf5')
+    CNN = load_model('CNN_UMi_3path_2fre_SNRminus_10dB_200ep.hdf5')
 
     t1=time.time()
     decoded_channel = CNN.predict(H_test_noisy)

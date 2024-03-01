@@ -7,11 +7,14 @@ from numpy import *
 import numpy as np
 import numpy.linalg as LA
 import os
+import string
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tensorflow as tf
 config = tf.ConfigProto()
 config.gpu_options.allow_growth=True   #allow growth
 import scipy.io as sio
+
+
 
 Nt=32
 Nt_beam=32
@@ -26,6 +29,9 @@ def DFT_matrix(N):
     D = np.power( omega, m * n )
     return D
 
+def textreplace(text):
+    text = str.replace(text,"\\", '/')
+    return text
 
 def AWGN(IFsig, SNR):
     dP = np.zeros(len(IFsig))
@@ -102,7 +108,8 @@ H_train=zeros((data_num_train,Nr,Nt,2*fre), dtype=float)
 H_train_noisy=zeros((data_num_train,Nr_beam,Nt_beam,2*fre), dtype=float)
 
 file_path = os.path.abspath(os.path.dirname(__file__))
-filedir = os.listdir(file_path + '/2fre_data')  # type the path of training data
+os.chdir(file_path)
+filedir = os.listdir("./2fre_data")  # type the path of training data
 n=0
 SNRr=0
 SNR_factor=5.9  # compensate channel power gain to approximate to 1
@@ -113,7 +120,7 @@ H_train_total_noisy = []
 
 for SNR in snr_train:
     for filename in filedir:
-        newname = os.path.join(file_path + '/2fre_data', filename)
+        newname = os.path.join('./2fre_data', filename)
         data = sio.loadmat(newname)
         channel = data['ChannelData_fre']
         for i in range(data_num_file):
@@ -158,13 +165,9 @@ H_train_total_noisy_1=np.delete(H_train_total_noisy_1,row_num,axis=0)
 print(len(row_num))
 print(H_train_total_1.shape,H_train_total_noisy_1.shape)
 
-
-
 # checkpoint
 
-filepath=file_path + '\CNN_UMi_3path_2fre_SNRminus_10dB_200ep.hdf5'
-
-
+filepath='CNN_UMi_3path_2fre_SNRminus_10dB_200ep.hdf5'
 
 checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
